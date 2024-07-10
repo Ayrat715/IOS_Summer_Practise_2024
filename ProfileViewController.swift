@@ -1,37 +1,97 @@
 //
 //  ProfileViewController.swift
-//  Homework_2
+//  Homework_3
 //
-//  Created by Айрат Фахрутдинов on 01.07.2024.
+//  Created by Айрат Фахрутдинов on 08.07.2024.
 //
 
 import UIKit
 
 class ProfileViewController: UIViewController {
     
-    @IBOutlet weak var avatarImageView: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var dobLabel: UILabel!
-    @IBOutlet weak var contactLabel: UILabel!
-    @IBOutlet weak var bioLabel: UILabel!
+    let avatarImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "avatar"))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.cornerRadius = 50
+        imageView.clipsToBounds = true
+        return imageView
+    }()
     
-    var user: (String, String, String, String, String)?
-
+    let nameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Имя: User1"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let dobLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Дата рождения: 01.01.2000"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let emailLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Почта: user1@example.com"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let genresLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Любимые жанры: Fiction, Mystery"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let logoutButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Выйти", for: .normal)
+        button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if let user = user {
-            nameLabel.text = user.1
-            dobLabel.text = user.2
-            contactLabel.text = user.3
-            bioLabel.text = user.4
-            avatarImageView.image = UIImage(named: user.1) 
-        }
+        view.backgroundColor = .white
+        setupViews()
     }
     
-    @IBAction func logoutButtonTapped(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
+    func setupViews() {
+        view.addSubview(avatarImageView)
+        view.addSubview(nameLabel)
+        view.addSubview(dobLabel)
+        view.addSubview(emailLabel)
+        view.addSubview(genresLabel)
+        view.addSubview(logoutButton)
+        
+        NSLayoutConstraint.activate([
+            avatarImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            avatarImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            avatarImageView.widthAnchor.constraint(equalToConstant: 100),
+            avatarImageView.heightAnchor.constraint(equalToConstant: 100),
+            
+            nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            nameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 20),
+            
+            dobLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            dobLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
+            
+            emailLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emailLabel.topAnchor.constraint(equalTo: dobLabel.bottomAnchor, constant: 10),
+            
+            genresLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            genresLabel.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 10),
+            
+            logoutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            logoutButton.topAnchor.constraint(equalTo: genresLabel.bottomAnchor, constant: 20)
+        ])
+    }
+    
+    @objc func logoutButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
 }
-
 
